@@ -2,13 +2,14 @@ from pyabstractapi.http import Methods
 
 
 class Resource(object):
-	def __init__(self, name, parent=None):
+	def __init__(self, name):
 		self.name = name
 		self.branches = {}
-		self.parent = parent
+		self.parent = None
 		# Overwrite these:
 		self.url = ""
 		self.apiinfo = {}
+		self.https = True
 
 	def add_resource(self, res):
 		self.branches[res.name] = res
@@ -16,12 +17,12 @@ class Resource(object):
 
 	def get_path(self):
 		if self.parent:
-			return [self.name] + self.parent.get_path()
+			return self.parent.get_path() + [self.name]
 		else:
-			return [self.name]
+			return ["", self.name]
 
 	def __call__(self):
-		return Methods(self.url, "/".join(self.get_path()), self.apiinfo)
+		return Methods(self.url, "/".join(self.get_path()), self.https, self.apiinfo)
 
 	def __getattr__(self, item):
 		if self.name == item:
