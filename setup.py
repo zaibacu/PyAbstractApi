@@ -1,7 +1,9 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
 from setuptools import setup
 from pip.req import parse_requirements
 
-from pyabstractapi.version import get_version()
+from pyabstractapi.version import get_version
 
 install_reqs = list(parse_requirements("requirements", session={}))
 
