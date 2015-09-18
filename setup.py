@@ -1,11 +1,15 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 from setuptools import setup
-from pip.req import parse_requirements
+from pip.req import parse_requirements, InstallationError
 
 from pyabstractapi.version import get_version
 
-install_reqs = list(parse_requirements("requirements", session={}))
+try:
+	install_reqs = list(parse_requirements("requirements", session={}))
+except InstallationError:
+	# There are no requirements
+	install_reqs = []
 
 setup(name="pyabstractapi",
 		version=get_version(),
