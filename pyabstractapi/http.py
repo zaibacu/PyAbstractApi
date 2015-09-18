@@ -1,12 +1,27 @@
+import http.client
+import json
+from functools import partial
+
+
 class Methods(object):
-	def get(self, **kwargs):
-		pass
+	def __init__(self, url, resource, apiinfo=None):
+		if "https" in url:
+			self.connection = lambda: http.client.HTTPSConnection(url)
+		else:
+			self.connection = lambda: http.client.HTTPConnection(url)
 
-	def post(self, **kwargs):
-		pass
+		self.resource = resource
+		self.apiinfo = dict(apiinfo)
+		self.headers = {"Content-Type": "application/json"}
 
-	def put(self, **kwargs):
-		pass
+	def __req(self, method, **kwargs):
+		conn = self.connection()
+		body = dict(self.apiinfo)
+		body.update(**kwargs)
+		conn.request(method, self.resource, body=json.dumps(body), headers=self.headers)
+		result = conn.getresponse().read()
+		conn.close()
+		return result
 
-	def delete(self, **kwargs):
-		pass
+	def __getattr__(self, item):
+		return partial(self.__req, item)
