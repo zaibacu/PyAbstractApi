@@ -16,7 +16,7 @@ class Resource(object):
 
 	def get_path(self):
 		if self.parent:
-			return self.parent.get_path() + ["{0}.json".format(self.name)]
+			return self.parent.get_path() + [self.name]
 		else:
 			return [self.name]
 
