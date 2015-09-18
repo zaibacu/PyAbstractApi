@@ -1,7 +1,8 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 from setuptools import setup
-from pip.req import parse_requirements, InstallationError
+from pip.req import parse_requirements
+from pip.exceptions import InstallationError
 
 from pyabstractapi.version import get_version
 
