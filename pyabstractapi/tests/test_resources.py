@@ -15,7 +15,7 @@ class ResourceTests(unittest.TestCase):
 		res1.add_resource(res3)
 		res3.add_resource(res4)
 
-		self.assertTrue(isinstance(res1.res1(), Methods))
 		self.assertTrue(isinstance(res1.res2(), Methods))
 		self.assertTrue(isinstance(res1.res3.res4(), Methods))
+
 

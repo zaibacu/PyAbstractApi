@@ -18,7 +18,7 @@ class Resource(object):
 		if self.parent:
 			return self.parent.get_path() + ["{0}.json".format(self.name)]
 		else:
-			return ["", self.name]
+			return [self.name]
 
 	def __call__(self):
 		return Methods(self.url, "/".join(self.get_path()), self.apiinfo)
