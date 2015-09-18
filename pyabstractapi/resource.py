@@ -1,10 +1,4 @@
-class Methods(object):
-	def __init__(self, **kwargs):
-		self.methods = kwargs
-
-	def __getattr__(self, item):
-		return self.methods[item]
-
+from pyabstractapi.http import Methods
 
 class Resource(object):
 	def __init__(self, name):
@@ -14,7 +8,7 @@ class Resource(object):
 	def add_resource(self, res):
 		self.branches[res.name] = res
 
-	def __call__(self, *args, **kwargs):
+	def __call__(self):
 		return Methods()
 
 	def __getattr__(self, item):
