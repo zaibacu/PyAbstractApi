@@ -7,7 +7,10 @@ class Methods(object):
 	def __init__(self, url, resource, https=True, apiinfo=None):
 		self.url = url
 		self.resource = resource
-		self.apiinfo = dict(apiinfo)
+		if apiinfo:
+			self.apiinfo = dict(apiinfo)
+		else:
+			self.apiinfo = {}
 		self.headers = {"Content-Type": "application/json", "Accept": "*/*"}
 
 	def request(self, resource, method, body):

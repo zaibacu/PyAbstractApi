@@ -9,7 +9,6 @@ class Resource(object):
 		# Overwrite these:
 		self.url = ""
 		self.apiinfo = {}
-		self.https = True
 
 	def add_resource(self, res):
 		self.branches[res.name] = res
@@ -22,12 +21,14 @@ class Resource(object):
 			return ["", self.name]
 
 	def __call__(self):
-		return Methods(self.url, "/".join(self.get_path()), self.https, self.apiinfo)
+		return Methods(self.url, "/".join(self.get_path()), self.apiinfo)
 
 	def __getattr__(self, item):
-		if self.name == item:
-			return self
+		http = {"get", "put", "post", "delete", "head"}
+		if item in http:
+			methods = Methods(self.url, "/".join(self.get_path()), self.apiinfo)
+			return getattr(methods, item)
 		elif item in self.branches.keys():
 			return self.branches[item]
 		else:
-			raise ValueError("method '{0}' not found".format(item))
+			return object.__getattribute__(self, item)
